@@ -74,6 +74,9 @@ namespace BugTrackerV2.Controllers
                 return View(model);
             }
 
+
+
+
             ApplicationUser user = UserManager.FindByEmail(model.Email);
             string userName;
             if (user != null)
@@ -86,7 +89,7 @@ namespace BugTrackerV2.Controllers
             }
             // This doesn't count login failures towards account lockout
             // To enable password failures to trigger account lockout, change to shouldLockout: true
-            var result = await SignInManager.PasswordSignInAsync(model.Email, model.Password, model.RememberMe, shouldLockout: false);
+            var result = await SignInManager.PasswordSignInAsync(userName, model.Password, model.RememberMe, shouldLockout: false);
             switch (result)
             {
                 case SignInStatus.Success:
@@ -214,7 +217,7 @@ namespace BugTrackerV2.Controllers
             if (ModelState.IsValid)
             {
                 var user = await UserManager.FindByNameAsync(model.Email);
-                if (user == null 
+                if (user == null) 
                 //!(await UserManager.IsEmailConfirmedAsync(user.Id)))
                 {
                     // Don't reveal that the user does not exist or is not confirmed

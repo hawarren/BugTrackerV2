@@ -10,6 +10,7 @@ using BugTrackerV2.Models;
 
 namespace BugTrackerV2.Controllers
 {
+    [RequireHttps]
     [Authorize]
     public class ManageController : Controller
     {
@@ -238,11 +239,66 @@ namespace BugTrackerV2.Controllers
                 {
                     await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
                 }
-                return RedirectToAction("Index", new { Message = ManageMessageId.ChangePasswordSuccess });
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangeProfileSuccess });
             }
             AddErrors(result);
             return View(model);
         }
+
+        //
+        // GET: /Manage/ChangeProfile
+        public ActionResult ChangeProfile()
+        {
+            ChangeProfileViewModel model = new ChangeProfileViewModel();
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+            model.UserName = user.UserName;
+            model.Email = user.Email;
+            model.FirstName = user.Email;
+            model.LastName = user.LastName;
+            model.DisplayName = user.DisplayName;
+
+            return View(model);
+        }
+
+        //
+        // POST: /Manage/ChangeProfile
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<ActionResult> ChangeProfile(ChangeProfileViewModel model)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(model);
+            }
+
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
+            user.UserName = model.UserName;
+            user.Email = model.Email;
+            user.FirstName = model.FirstName;
+            user.LastName = model.LastName;
+            user.DisplayName = model.DisplayName;
+
+            var result = await UserManager.UpdateAsync(user);
+
+
+
+            //var result = await UserManager.ChangePasswordAsync(User.Identity.GetUserId(), model.OldPassword, model.NewPassword);
+            if (result.Succeeded)
+            {
+                user = await UserManager.FindByIdAsync(User.Identity.GetUserId());
+                if (user != null)
+                {
+                    await SignInManager.SignInAsync(user, isPersistent: false, rememberBrowser: false);
+                }
+                return RedirectToAction("Index", new { Message = ManageMessageId.ChangeProfileSuccess });
+            }
+            AddErrors(result);
+            return View(model);
+        }
+
+
+        //
+
 
         //
         // GET: /Manage/SetPassword
@@ -377,6 +433,7 @@ namespace BugTrackerV2.Controllers
         {
             AddPhoneSuccess,
             ChangePasswordSuccess,
+            ChangeProfileSuccess,
             SetTwoFactorSuccess,
             SetPasswordSuccess,
             RemoveLoginSuccess,
