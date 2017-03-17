@@ -12,7 +12,7 @@ namespace BugTrackerV2.Migrations
     {
         public Configuration()
         {
-            AutomaticMigrationsEnabled = false;
+            AutomaticMigrationsEnabled = true;
         }
 
         protected override void Seed(BugTrackerV2.Models.ApplicationDbContext context)
