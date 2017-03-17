@@ -37,8 +37,7 @@ namespace BugTrackerV2.Models
         public System.Data.Entity.DbSet<BugTrackerV2.Models.Project> Projects { get; set; }
 
         public System.Data.Entity.DbSet<BugTrackerV2.Models.Ticket> Tickets { get; set; }
-
-
+        
         public System.Data.Entity.DbSet<BugTrackerV2.Models.TicketPriority> TicketPriorities { get; set; }
 
         public System.Data.Entity.DbSet<BugTrackerV2.Models.TicketStatus> TicketStatus { get; set; }
