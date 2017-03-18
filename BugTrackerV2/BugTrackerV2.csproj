@@ -175,6 +175,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
+    <Compile Include="Helpers\HelperExtensions.cs" />
     <Compile Include="Helpers\UserRolesHelper..cs" />
     <Compile Include="Migrations\201703161759561_Enable-Migrations.cs" />
     <Compile Include="Migrations\201703161759561_Enable-Migrations.Designer.cs">
@@ -194,7 +195,7 @@
     <Compile Include="Models\TicketComment.cs" />
     <Compile Include="Models\TicketHistory.cs" />
     <Compile Include="Models\TicketPriority.cs" />
-    <Compile Include="Models\TicketsController.cs" />
+    <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Models\TicketStatus.cs" />
     <Compile Include="Models\TicketType.cs" />
     <Compile Include="Models\UsersViewModel.cs" />

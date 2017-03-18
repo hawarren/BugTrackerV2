@@ -77,7 +77,7 @@ namespace BugTrackerV2.Controllers
 
 
 
-            ApplicationUser user = UserManager.FindByEmail(model.Email);
+            Users user = UserManager.FindByEmail(model.Email);
             string userName;
             if (user != null)
             {
@@ -165,7 +165,7 @@ namespace BugTrackerV2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new Users { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
@@ -417,7 +417,7 @@ namespace BugTrackerV2.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
+                var user = new Users { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {

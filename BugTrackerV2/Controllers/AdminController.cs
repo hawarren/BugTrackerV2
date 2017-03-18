@@ -51,26 +51,29 @@ namespace BugTrackerV2.Controllers
 
 
 
-        public ActionResult RemoveUserRole()
-        {
-            ViewBag.Users = new SelectList(db.Users, "Id", "FirstName");
-            ViewBag.Roles = new SelectList(db.Roles, "Name", "Name");
+        //public ActionResult RemoveUserRole()
+        //{
+        //    ViewBag.Users = new SelectList(db.Users, "Id", "FirstName");
+        //    ViewBag.Roles = new SelectList(db.Roles, "Name", "Name");
 
-            return View();
-        }
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult RemoveUserRole(string Users, string Roles)
-        {
-            ApplicationUser usr = db.Users.Find();
-            if (helper.IsUserInRole(usr.Id, Roles) == true)
-            {
-                helper.RemoveUserFromRole(usr.Id, Roles);
-                return RedirectToAction("Index");
-            }
-            else
-            { return View(); }
-        }
+        //    return View();
+        //}
+        //[HttpPost]
+        //[ValidateAntiForgeryToken]
+        //public ActionResult RemoveUserRole(string user, string Roles)
+        //{
+        //    Users usr = db.Users.Id;
+        //   // Ticket ticket = db.Tickets.Find(id);
+
+
+        //    if (helper.IsUserInRole(usr.Id, Roles) == true)
+        //    {
+        //        helper.RemoveUserFromRole(usr.Id, Roles);
+        //        return RedirectToAction("Index");
+        //    }
+        //    else
+        //    { return View(); }
+        //}
 
 
 

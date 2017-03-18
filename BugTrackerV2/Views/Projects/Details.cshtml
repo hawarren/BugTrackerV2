@@ -23,4 +23,5 @@
 <p>
     @Html.ActionLink("Edit", "Edit", new { id = Model.Id }) |
     @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Add a Ticket", "Create", "Tickets", new { projectId = Model.Id}, null )
 </p>
