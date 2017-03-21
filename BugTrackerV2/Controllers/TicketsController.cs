@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using Microsoft.AspNet.Identity;
+using BugTrackerV2.Helpers;
 
 namespace BugTrackerV2.Models
 {
@@ -18,10 +19,82 @@ namespace BugTrackerV2.Models
         [Authorize]
         public ActionResult Index()
         {
-            var tickets = db.Tickets.Include(t => t.AssignedToUser).Include(t => t.OwnerUser).Include(t => t.Project).Include(t => t.TicketPriority).Include(t => t.TicketStatus).Include(t => t.TicketType);
-            return View(tickets.ToList());
-        }
+            //find the id of the current user
+            var userId = User.Identity.GetUserId();
+            TicketIndexViewModel model = new TicketIndexViewModel();
+            //use roles helper to help with this
+            UserRolesHelper helper = new UserRolesHelper();
+            if (User.IsInRole("Admin"))
+            {
 
+                var tickets = db.Tickets.Include(t => t.AssignedToUser)
+                    .Include(t => t.OwnerUser)
+                    .Include(t => t.Project)
+                    .Include(t => t.TicketPriority)
+                    .Include(t => t.TicketStatus)
+                    .Include(t => t.TicketType);
+
+                //put all the info in a list to prepare to pass to the viewmodel
+                model.AdminTickets = tickets.ToList();
+            }
+
+            if (User.IsInRole("ProjectManager"))
+            {
+                //alternate way of writing the the linq statement with SelectMany, showing how the linq statement works step by step
+                //var proj = db.Projects;
+                //var myproj = proj.Where(p => p.PMID == userId);
+                //var tkts = myproj.SelectMany(t => t.Tickets);
+
+
+                //get projects where the userid is the PMID aka it's their project, than select all the tickets for that project.
+                var tickets = db.Projects.Where(p => p.PMID == userId).SelectMany(p => p.Tickets);
+
+
+                tickets.Include(t => t.AssignedToUser)
+               .Include(t => t.OwnerUser)
+               .Include(t => t.Project)
+               .Include(t => t.TicketPriority)
+               .Include(t => t.TicketStatus)
+               .Include(t => t.TicketType);
+                //put all the info in a list to prepare to pass to the viewmodel
+                model.PMTickets = tickets.ToList();
+
+            }
+            if (User.IsInRole("Developer"))
+            {
+                //eagerloading the other info to make sure it's in the view
+                var tickets = db.Tickets.Where(t => t.AssignedToUserId == userId)
+                    //eagerloading the other info to make sure it's in the view
+
+                    .Include(t => t.AssignedToUser)
+                        .Include(t => t.OwnerUser)
+                        .Include(t => t.Project)
+                        .Include(t => t.TicketPriority)
+                        .Include(t => t.TicketStatus)
+                        .Include(t => t.TicketType);
+
+                //put all the info in a list to prepare to pass to the viewmodel
+                model.DevTickets = tickets.ToList();
+            }
+
+            if (User.IsInRole("Submitter"))
+            {
+
+                var tickets = db.Tickets.Include(t => t.OwnerUser)
+                    .Include(t => t.OwnerUser)
+                    .Include(t => t.Project)
+                    .Include(t => t.TicketPriority)
+                    .Include(t => t.TicketStatus)
+                    .Include(t => t.TicketType);
+
+                //put all the info in a list to prepare to pass to the viewmodel
+                model.SubTickets = tickets.ToList();
+            }
+
+
+            return View(model);
+
+        }
         // GET: Tickets/Details/5
         public ActionResult Details(int? id)
         {

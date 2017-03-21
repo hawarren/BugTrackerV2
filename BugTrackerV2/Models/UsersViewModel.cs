@@ -7,7 +7,7 @@ namespace BugTrackerV2.Models
 {
     public class UsersViewModel
     {
-        public Users User { get; set; }
+        public ApplicationUser User { get; set; }
         public List<string> Roles { get; set; }     
 
     }

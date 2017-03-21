@@ -11,7 +11,7 @@ namespace BugTrackerV2.Models
     //}
     public class AdminUserViewModel
     {
-        public Users User { get; set; }
+        public ApplicationUser User { get; set; }
         public MultiSelectList Roles { get; set; }
         public string[] SelectedRoles { get; set; }
 

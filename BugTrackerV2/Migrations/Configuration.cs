@@ -43,12 +43,12 @@ namespace BugTrackerV2.Migrations
 
 
 
-            var userManager = new UserManager<Users>(
-            new UserStore<Users>(context));
+            var userManager = new UserManager<ApplicationUser>(
+            new UserStore<ApplicationUser>(context));
 
             if (!context.Users.Any(u => u.Email == "hanifwarren@gmail.com"))
             {
-                userManager.Create(new Users {
+                userManager.Create(new ApplicationUser {
                     UserName = "hanifwarren@gmail.com",
                     Email = "hanifwarren@gmail.com",
                     FirstName = "Hanif",
@@ -61,6 +61,9 @@ namespace BugTrackerV2.Migrations
 
             var userId = userManager.FindByEmail("hanifwarren@gmail.com").Id;
             userManager.AddToRole(userId, "Admin");
+            userManager.AddToRole(userId, "ProjectManager");
+            userManager.AddToRole(userId, "Submitter");
+            userManager.AddToRole(userId, "Developer");
 
 
             //  This method will be called after migrating to the latest version.
@@ -78,7 +81,7 @@ namespace BugTrackerV2.Migrations
 
             if (!context.Users.Any(u => u.Email == "testuser1@btracker.com"))
             {
-                userManager.Create(new Users
+                userManager.Create(new ApplicationUser
                 {
                     UserName = "testuser1@btracker.com",
                     Email = "testuser1@btracker.com",
@@ -92,7 +95,7 @@ namespace BugTrackerV2.Migrations
             if (!context.Users.Any(u => u.Email == "testuser2@btracker.com"))
             {
 
-                userManager.Create(new Users
+                userManager.Create(new ApplicationUser
                 {
                     UserName = "testuser2@btracker.com",
                     Email = "testuser2@btracker.com",
@@ -106,7 +109,7 @@ namespace BugTrackerV2.Migrations
             if (!context.Users.Any(u => u.Email == "testuser3@btracker.com"))
             {
 
-                userManager.Create(new Users
+                userManager.Create(new ApplicationUser
                 {
                     UserName = "testuser3@btracker.com",
                     Email = "testuser3@btracker.com",
@@ -120,7 +123,7 @@ namespace BugTrackerV2.Migrations
             if (!context.Users.Any(u => u.Email == "testuser4@btracker.com"))
             {
 
-                userManager.Create(new Users
+                userManager.Create(new ApplicationUser
                 {
                     UserName = "testuser4@btracker.com",
                     Email = "testuser4@btracker.com",
@@ -134,7 +137,7 @@ namespace BugTrackerV2.Migrations
             if (!context.Users.Any(u => u.Email == "testuser5@btracker.com"))
             {
 
-                userManager.Create(new Users
+                userManager.Create(new ApplicationUser
                 {
                     UserName = "testuser5@btracker.com",
                     Email = "testuser5@btracker.com",
@@ -148,7 +151,7 @@ namespace BugTrackerV2.Migrations
             if (!context.Users.Any(u => u.Email == "testuser6@btracker.com"))
             {
 
-                userManager.Create(new Users
+                userManager.Create(new ApplicationUser
                 {
                     UserName = "testuser6@btracker.com",
                     Email = "testuser6@btracker.com",

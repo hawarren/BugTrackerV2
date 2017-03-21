@@ -7,6 +7,7 @@ using System.Net;
 using System.Web;
 using System.Web.Mvc;
 using BugTrackerV2.Models;
+using BugTrackerV2.Helpers;
 
 namespace BugTrackerV2.Controllers
 {
@@ -34,9 +35,41 @@ namespace BugTrackerV2.Controllers
             }
             return View(project);
         }
+        //GET
+        public ActionResult AssignPM(int id)
+        {
+            AdminProjectViewModel vm = new AdminProjectViewModel();
+            UserRolesHelper helper = new UserRolesHelper();
+
+          
+            vm.ProjectManagers = helper.UsersInRole("ProjectManager");
+            ViewBag.PMList = new SelectList(vm.ProjectManagers, "Id", "FirstName");
+            vm.Project = db.Projects.Find(id);
+
+           
+
+            return View(vm);
+        }
+
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        //public ActionResult AssignPM(string PMList)
+        //{
+        //    var prj = db.Projects.Find(Id);
+        //    prj.PMID = PMList;
+
+        //    db.SaveChanges();
+        //    return RedirectToAction("Index");
+
+        //}
+
+
+
+
+
 
         // GET: Projects/Create
-        [Authorize(Roles = "Admin, Project Manager")]
+        [Authorize(Roles = "Admin, ProjectManager")]
         public ActionResult Create()
         {
             return View();
@@ -45,7 +78,7 @@ namespace BugTrackerV2.Controllers
         // POST: Projects/Create
         // To protect from overposting attacks, please enable the specific properties you want to bind to, for 
         // more details see http://go.microsoft.com/fwlink/?LinkId=317598.
-        [Authorize(Roles = "Admin, Project Manager")]
+        [Authorize(Roles = "Admin, ProjectManager")]
         [HttpPost]
         [ValidateAntiForgeryToken]
         public ActionResult Create([Bind(Include = "Id,Name")] Project project)

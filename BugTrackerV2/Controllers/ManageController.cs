@@ -250,7 +250,7 @@ namespace BugTrackerV2.Controllers
         public ActionResult ChangeProfile()
         {
             ChangeProfileViewModel model = new ChangeProfileViewModel();
-            Users user = UserManager.FindById(User.Identity.GetUserId());
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
             model.UserName = user.UserName;
             model.Email = user.Email;
             model.FirstName = user.Email;
@@ -271,7 +271,7 @@ namespace BugTrackerV2.Controllers
                 return View(model);
             }
 
-            Users user = UserManager.FindById(User.Identity.GetUserId());
+            ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
             user.UserName = model.UserName;
             user.Email = model.Email;
             user.FirstName = model.FirstName;

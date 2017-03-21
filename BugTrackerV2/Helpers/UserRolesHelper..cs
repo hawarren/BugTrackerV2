@@ -14,7 +14,7 @@ namespace BugTrackerV2.Helpers
 {
     public class UserRolesHelper
     {
-        private UserManager<Users> userManager = new UserManager<Users>(new UserStore<Users>(new ApplicationDbContext()));
+        private UserManager<ApplicationUser> userManager = new UserManager<ApplicationUser>(new UserStore<ApplicationUser>(new ApplicationDbContext()));
         private ApplicationDbContext db = new ApplicationDbContext();
 
         public bool IsUserInRole(string userId, string roleName)
@@ -39,9 +39,9 @@ namespace BugTrackerV2.Helpers
             return result.Succeeded;
         }
 
-        public ICollection<Users> UsersInRole(string roleName)
+        public ICollection<ApplicationUser> UsersInRole(string roleName)
         {
-            var resultList = new List<Users>();
+            var resultList = new List<ApplicationUser>();
             var List = userManager.Users.ToList();
             foreach (var user in List)
             {
@@ -51,9 +51,9 @@ namespace BugTrackerV2.Helpers
             return resultList;
         }
 
-        public ICollection<Users> UsersNotInRole(string roleName)
+        public ICollection<ApplicationUser> UsersNotInRole(string roleName)
         {
-            var resultList = new List<Users>();
+            var resultList = new List<ApplicationUser>();
             var List = userManager.Users.ToList();
             foreach (var user in List)
             {

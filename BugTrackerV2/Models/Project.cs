@@ -11,14 +11,15 @@ namespace BugTrackerV2.Models
         public Project()
         {
             this.Tickets = new HashSet<Ticket>();
-            this.Users = new HashSet<Users>();
+            this.Users = new HashSet<ApplicationUser>();
         }
         
         public int Id { get; set; }
         [Required]
         public string Name { get; set; }
+        public string PMID { get; set; }
 
         public virtual ICollection<Ticket> Tickets { get; set; }
-        public virtual ICollection<Users> Users {get; set;}
+        public virtual ICollection<ApplicationUser> Users {get; set;}
     }
 }

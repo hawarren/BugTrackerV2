@@ -183,6 +183,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\AdminProjectViewModel.cs" />
     <Compile Include="Models\AdminViewModels.cs" />
     <Compile Include="Models\EmailModel.cs" />
     <Compile Include="Models\IdentityModels.cs" />
@@ -194,6 +195,7 @@
     <Compile Include="Models\TicketAttachment.cs" />
     <Compile Include="Models\TicketComment.cs" />
     <Compile Include="Models\TicketHistory.cs" />
+    <Compile Include="Models\TicketIndexViewModel.cs" />
     <Compile Include="Models\TicketPriority.cs" />
     <Compile Include="Controllers\TicketsController.cs" />
     <Compile Include="Models\TicketStatus.cs" />
@@ -273,6 +275,8 @@
     <Content Include="Views\Tickets\Edit.cshtml" />
     <Content Include="Views\Tickets\Index.cshtml" />
     <Content Include="Views\Admin\RemoveUserRole.cshtml" />
+    <Content Include="Views\Projects\AssignPM.cshtml" />
+    <None Include="Views\Tickets\Index - Copy.cshtmlbak" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

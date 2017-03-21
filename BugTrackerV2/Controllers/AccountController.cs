@@ -9,6 +9,7 @@ using Microsoft.AspNet.Identity;
 using Microsoft.AspNet.Identity.Owin;
 using Microsoft.Owin.Security;
 using BugTrackerV2.Models;
+using BugTrackerV2.Helpers;
 
 namespace BugTrackerV2.Controllers
 {
@@ -77,7 +78,7 @@ namespace BugTrackerV2.Controllers
 
 
 
-            Users user = UserManager.FindByEmail(model.Email);
+            ApplicationUser user = UserManager.FindByEmail(model.Email);
             string userName;
             if (user != null)
             {
@@ -165,10 +166,13 @@ namespace BugTrackerV2.Controllers
         {
             if (ModelState.IsValid)
             {
-                var user = new Users { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email, FirstName=model.FirstName, LastName=model.LastName, DisplayName=model.DisplayName };
                 var result = await UserManager.CreateAsync(user, model.Password);
                 if (result.Succeeded)
                 {
+                    UserRolesHelper helper = new UserRolesHelper();
+                    helper.AddUserToRole(user.Id, "Submitter");
+
                     await SignInManager.SignInAsync(user, isPersistent:false, rememberBrowser:false);
                     
                     // For more information on how to enable account confirmation and password reset please visit http://go.microsoft.com/fwlink/?LinkID=320771
@@ -417,7 +421,7 @@ namespace BugTrackerV2.Controllers
                 {
                     return View("ExternalLoginFailure");
                 }
-                var user = new Users { UserName = model.Email, Email = model.Email };
+                var user = new ApplicationUser { UserName = model.Email, Email = model.Email };
                 var result = await UserManager.CreateAsync(user);
                 if (result.Succeeded)
                 {
