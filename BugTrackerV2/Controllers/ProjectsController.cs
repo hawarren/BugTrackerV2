@@ -51,8 +51,8 @@ namespace BugTrackerV2.Controllers
             return View(vm);
         }
 
-        [HttpPost]
-        [ValidateAntiForgeryToken]
+       // [HttpPost]
+        //[ValidateAntiForgeryToken]
         //public ActionResult AssignPM(string PMList)
         //{
         //    var prj = db.Projects.Find(Id);

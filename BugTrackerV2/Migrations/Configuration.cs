@@ -161,7 +161,44 @@ namespace BugTrackerV2.Migrations
                 }, "Abc&123!");
             }
 
+            
+            if (!context.TicketTypes.Any(r => r.Name == "Bug"))
 
+            { context.TicketTypes.Add(new TicketType { Name = "Production Fix" });
+
+            }
+            
+            if (!context.TicketTypes.Any(r => r.Name == "Project Task"))
+            {
+                context.TicketTypes.Add(new TicketType { Name = "Project Task" });
+            }
+
+            if (!context.TicketTypes.Any(r => r.Name == "Software Update"))
+            {
+                context.TicketTypes.Add(new TicketType { Name = "Software Update" });
+            }
+
+
+            if (!context.TicketPriorities.Any(r => r.Name == "Low"))
+
+            {
+                context.TicketPriorities.Add(new TicketPriority { Name = "Low" });
+
+            }
+
+            if (!context.TicketTypes.Any(r => r.Name == "Medium"))
+            {
+                context.TicketPriorities.Add(new TicketPriority { Name = "Medium" });
+            }
+
+            if (!context.TicketTypes.Any(r => r.Name == "High"))
+            {
+                context.TicketPriorities.Add(new TicketPriority { Name = "High" });
+            }
+            if (!context.TicketTypes.Any(r => r.Name == "ExtremeDanger"))
+            {
+                context.TicketPriorities.Add(new TicketPriority { Name = "ExtremeDanger" });
+            }
         }
     }
 }
