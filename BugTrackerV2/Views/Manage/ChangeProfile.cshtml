@@ -8,7 +8,7 @@
 @using (Html.BeginForm("ChangeProfile", "Manage", FormMethod.Post, new { @class = "form-horizontal", role = "form" }))
 {
     @Html.AntiForgeryToken()
-    <h4>Create a new account.</h4>
+    <h4>Change Your Profile Details</h4>
     <hr />
     @Html.ValidationSummary("", new { @class = "text-danger" })
 
@@ -16,7 +16,7 @@
     <div class="form-group">
         @Html.LabelFor(m => m.UserName, new { @class = "col-md-2 control-label" })
 
-        @Html.DisplayFor(m => m.UserName)
+       
         <div class="col-md-10">
             @Html.TextBoxFor(m => m.UserName, new { @class = "form-control" })
         </div>

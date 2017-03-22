@@ -18,7 +18,21 @@ namespace BugTrackerV2.Controllers
         // GET: Projects
         public ActionResult Index()
         {
-            return View(db.Projects.ToList());
+            var projs = db.Projects.ToList();
+            List<ProjectPMViewModel> model = new List<ProjectPMViewModel>();
+
+            foreach (var p in projs)
+            {
+                ProjectPMViewModel vm = new ProjectPMViewModel();
+                vm.Project = p;
+                vm.ProjectManager = p.PMID != null ? db.Users.Find(p.PMID) : null;
+
+                model.Add(vm);
+                
+            }
+
+            
+            return View(model);
         }
 
         // GET: Projects/Details/5
@@ -41,27 +55,35 @@ namespace BugTrackerV2.Controllers
             AdminProjectViewModel vm = new AdminProjectViewModel();
             UserRolesHelper helper = new UserRolesHelper();
 
-          
-            vm.ProjectManagers = helper.UsersInRole("ProjectManager");
-            ViewBag.PMList = new SelectList(vm.ProjectManagers, "Id", "FirstName");
+            //modified in favor of enhanced code below
+            //vm.ProjectManagers = helper.UsersInRole("ProjectManager");
+            //ViewBag.PMList = new SelectList(vm.ProjectManagers, "Id", "FirstName");
+            //vm.Project = db.Projects.Find(id);
+
+            //these 3 lines replace the prior 3 lines
+            var pms = helper.UsersInRole("ProjectManager");
+            vm.PMUsers = new SelectList(pms, "Id", "FirstName");
             vm.Project = db.Projects.Find(id);
-
-           
-
+            
             return View(vm);
         }
 
-       // [HttpPost]
-        //[ValidateAntiForgeryToken]
-        //public ActionResult AssignPM(string PMList)
-        //{
-        //    var prj = db.Projects.Find(Id);
-        //    prj.PMID = PMList;
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public ActionResult AssignPM(AdminProjectViewModel adminVm)
+        {
+            if (ModelState.IsValid)
+            { 
+            var prj = db.Projects.Find(adminVm.Project.Id);
+            prj.PMID = adminVm.SelectedUser;
 
-        //    db.SaveChanges();
-        //    return RedirectToAction("Index");
+            db.SaveChanges();
 
-        //}
+            return RedirectToAction("Index");
+            } 
+            return View(adminVm.Project.Id);
+
+        }
 
 
 

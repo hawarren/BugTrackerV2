@@ -111,7 +111,7 @@ namespace BugTrackerV2.Models
         }
 
         // GET: Tickets/Create
-        [Authorize(Roles = "Submitter")]
+        [Authorize(Roles = "Submitter, Admin")]
         public ActionResult Create(int projectId)
         {
             Ticket ticket = new Ticket();
@@ -139,6 +139,7 @@ namespace BugTrackerV2.Models
                 //ticket.TicketPriorityId = 3;
                 ticket.TicketPriorityId = db.TicketPriorities.FirstOrDefault(n => n.Name == "Low").Id;
                 ticket.TicketStatusId = 1;
+                ticket.Created = DateTimeOffset.Now;
                 db.Tickets.Add(ticket);
                 db.SaveChanges();
                 return RedirectToAction("Index");

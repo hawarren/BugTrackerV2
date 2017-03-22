@@ -186,19 +186,46 @@ namespace BugTrackerV2.Migrations
 
             }
 
-            if (!context.TicketTypes.Any(r => r.Name == "Medium"))
+            if (!context.TicketPriorities.Any(r => r.Name == "Medium"))
             {
                 context.TicketPriorities.Add(new TicketPriority { Name = "Medium" });
             }
 
-            if (!context.TicketTypes.Any(r => r.Name == "High"))
+            if (!context.TicketPriorities.Any(r => r.Name == "High"))
             {
                 context.TicketPriorities.Add(new TicketPriority { Name = "High" });
             }
-            if (!context.TicketTypes.Any(r => r.Name == "ExtremeDanger"))
+            if (!context.TicketPriorities.Any(r => r.Name == "ExtremeDanger"))
             {
                 context.TicketPriorities.Add(new TicketPriority { Name = "ExtremeDanger" });
             }
+
+
+            if (!context.TicketStatus.Any(r => r.Name == "Open"))
+            {
+                context.TicketStatus.Add(new TicketStatus { Name = "Open" });
+            }
+
+
+            if (!context.TicketStatus.Any(r => r.Name == "New"))
+            {
+                context.TicketStatus.Add(new TicketStatus { Name = "New" });
+            }
+
+            if (!context.TicketStatus.Any(r => r.Name == "Closed"))
+            {
+                context.TicketStatus.Add(new TicketStatus { Name = "Closed" });
+            }
+
+            if (!context.TicketStatus.Any(r => r.Name == "WontFix"))
+            {
+                context.TicketStatus.Add(new TicketStatus { Name = "WontFix" });
+            }
+            if (!context.TicketStatus.Any(r => r.Name == "UnderReview"))
+            {
+                context.TicketStatus.Add(new TicketStatus { Name = "UnderReview" });
+            }
+
         }
     }
 }

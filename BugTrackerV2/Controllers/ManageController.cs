@@ -253,7 +253,7 @@ namespace BugTrackerV2.Controllers
             ApplicationUser user = UserManager.FindById(User.Identity.GetUserId());
             model.UserName = user.UserName;
             model.Email = user.Email;
-            model.FirstName = user.Email;
+            model.FirstName = user.FirstName;
             model.LastName = user.LastName;
             model.DisplayName = user.DisplayName;
 
